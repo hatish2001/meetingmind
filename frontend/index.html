@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MeetingMind - AI Meeting Assistant</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">🧠</div>
+          <span>MeetingMind</span>
+        </div>
+      </div>
+
+      <div class="search-container">
+        <input type="text" class="search-input" id="search-input" placeholder="Search meetings...">
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-item active" href="/" data-route="/">
+          <span class="nav-icon">📋</span>
+          All Meetings
+        </a>
+        <a class="nav-item" href="/meeting" data-route="/meeting">
+          <span class="nav-icon">🎙️</span>
+          Start Recording
+        </a>
+      </nav>
+
+      <div style="flex: 1; overflow-y: auto; padding: 10px;">
+        <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-tertiary); padding: 10px 16px; text-transform: uppercase;">
+          Recent Notes
+        </div>
+        <div id="notes-list" class="notes-list">
+          <!-- Notes populated by JS -->
+        </div>
+      </div>
+
+      <div style="padding: 15px; border-top: 1px solid var(--border-color);">
+        <div style="font-size: 0.8rem; color: var(--text-tertiary);">
+          <div id="api-status">
+            <span style="color: var(--warning-color);">⚠️ Checking API...</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+      <!-- Content loaded dynamically -->
+    </main>
+  </div>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">
+    🌙
+  </button>
+
+  <!-- Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/recorder.js"></script>
+  <script src="/js/app.js"></script>
+
+  <script>
+    // Check API health on load
+    window.api.healthCheck().then(data => {
+      const status = document.getElementById('api-status');
+      if (data.status === 'ok') {
+        status.innerHTML = data.minimaxConfigured 
+          ? '<span style="color: var(--success-color);">✅ API Connected</span>'
+          : '<span style="color: var(--warning-color);">⚠️ MiniMax not configured</span>';
+      } else {
+        status.innerHTML = '<span style="color: var(--danger-color);">❌ API Error</span>';
+      }
+    }).catch(() => {
+      document.getElementById('api-status').innerHTML = '<span style="color: var(--danger-color);">❌ Cannot connect to server</span>';
+    });
+
+    // Update theme toggle icon
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      const btn = document.getElementById('theme-toggle');
+      btn.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '🌙' : '☀️';
+    });
+  </script>
+</body>
+</html>

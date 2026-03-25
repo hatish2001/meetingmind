@@ -127,10 +127,10 @@ get_app() {
         # Clone from GitHub
         echo -e "${YELLOW}Cloning MeetingMind from GitHub...${NC}"
         if command_exists gh; then
-            gh repo clone harishraj/meetingmind "$install_dir" 2>/dev/null || \
-            git clone https://github.com/harishraj/meetingmind.git "$install_dir"
+            gh repo clone hatish2001/meetingmind "$install_dir" 2>/dev/null || \
+            git clone https://github.com/hatish2001/meetingmind.git "$install_dir"
         else
-            git clone https://github.com/harishraj/meetingmind.git "$install_dir"
+            git clone https://github.com/hatish2001/meetingmind.git "$install_dir"
         fi
     fi
     
